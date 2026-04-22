@@ -53,5 +53,34 @@ def save():
     conn.close()
     return redirect("/")
 
+@app.route("/edit/<int:id>")
+def producto_edit(id):
+    conn = sqlite3.connect('inventario.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM productos WHERE id = ?", (id,))
+    producto = cursor.fetchone()
+    conn.close()
+    return render_template('edit.html', producto=producto)
+
+@app.route("/update", methods=['POST'])
+def producto_update():
+    id = request.form['id']
+    nombre = request.form['nombre']
+    categoria = request.form['categoria']
+    precio = request.form['precio']
+    stock = request.form['stock']
+
+    conn = sqlite3.connect('inventario.db')
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        UPDATE productos SET nombre=?, categoria=?, precio=?, stock=? WHERE id=?
+        """,(nombre, categoria, precio, stock, id)
+    )
+    conn.commit()
+    conn.close()
+    return redirect("/")    
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Editar Producto</h2>
+<form method="post" action="/update">
+    <input type="hidden" name="id" value="{{ producto.id }}">
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" name="nombre" value="{{ producto.nombre }}">
+    </div>
+    <div class="form-group">
+        <label for="categoria">Categoría:</label>
+        <input type="text" class="form-control" name="categoria" value="{{ producto.categoria }}">
+    </div>
+    <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input type="number" class="form-control" name="precio" step="0.01" value="{{ producto.precio }}">
+    </div>
+    <div class="form-group">
+        <label for="stock">Stock:</label>
+        <input type="number" class="form-control" name="stock" value="{{ producto.stock }}">
+    </div>
+    <button type="submit" class="btn btn-warning">Actualizar Producto</button>
+</form>
+{% endblock %}

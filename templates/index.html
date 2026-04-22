@@ -25,9 +25,8 @@
             <td>{{ producto.categoria }}</td>
             <td>{{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
-            <td>Editar</td>
-            <td>Eliminar</td>
-
+            <td><a href="/edit/{{ producto.id }}" class="btn btn-warning">Editar</a></td>
+            <td><a href="" class="btn btn-danger" onclick="return(confirm('Estas seguro de Eliminar??'))">Eliminar</a></td>
         </tr>
         {% endfor %}
     </tbody>
