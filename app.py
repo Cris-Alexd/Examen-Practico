@@ -23,8 +23,35 @@ init_database()
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    conn = sqlite3.connect('inventario.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM productos")
+    productos = cursor.fetchall()
 
+    return render_template('index.html', productos=productos)
+
+@app.route("/create")
+def create():
+    return render_template('create.html')
+
+
+@app.route("/save", methods=['POST'])
+def save():
+    nombre = request.form['nombre']
+    categoria = request.form['categoria']
+    precio = request.form['precio']
+    stock = request.form['stock']
+
+    conn = sqlite3.connect('inventario.db')
+    cursor = conn.cursor()
+    cursor.execute(
+        """INSERT INTO productos (nombre, categoria, precio, stock) VALUES (?, ?, ?, ?)
+        """,(nombre, categoria, precio, stock)
+    )
+    conn.commit()
+    conn.close()
+    return redirect("/")
 
 if __name__ == '__main__':
     app.run(debug=True)
