@@ -21,7 +21,7 @@ def init_database():
 init_database()
 
 
-@app.route('/')
+@app.route("/")
 def index():
     return render_template('index.html')
 
